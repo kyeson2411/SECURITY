@@ -1,20 +1,24 @@
+<?>
 <?php
 //Script name: GradeOutputTable.php
-$SName = $_POST['txtNme'];
-$SSub = $_POST['lstSub'];
-$SPre = $_POST['txtPre'];
-$SMid = $_POST['txtMid'];
-$SFin = $_POST['txtFin'];
 
+// Check if the form was submitted via POST
 if(isset($_POST['btnCompute']))
 {
-    if(empty($_POST['txtPre']) or empty($_POST['txtMid']) or empty($_POST['txtFin']))
+    $SName = isset($_POST['txtNme']) ? $_POST['txtNme'] : '';
+    $SSub = isset($_POST['lstSub']) ? $_POST['lstSub'] : '';
+    $SPre = isset($_POST['txtPre']) ? $_POST['txtPre'] : '';
+    $SMid = isset($_POST['txtMid']) ? $_POST['txtMid'] : '';
+    $SFin = isset($_POST['txtFin']) ? $_POST['txtFin'] : '';
+
+    if(empty($SPre) or empty($SMid) or empty($SFin))
     {
         echo "<center><h2>Please enter grades...</h2></center>";
+        echo "<br><center><a href='GradeInputTable.php'>Back</a></center>";
         exit();
     }
     
-    if(is_numeric($_POST['txtPre']) and is_numeric($_POST['txtMid']) and is_numeric($_POST['txtFin']))
+    if(is_numeric($SPre) and is_numeric($SMid) and is_numeric($SFin))
     {
         $SSem = $SPre * 0.25 + $SMid * 0.25 + $SFin * 0.5;
 
@@ -46,7 +50,7 @@ if(isset($_POST['btnCompute']))
         <hr color=green size=2>
         <table border=1>
             <tr>
-                <td colspan=7><b>Name:</b><?php echo $SName;?></td>
+                <td colspan=7><b>Name:</b> <?php echo $SName;?></td>
             </tr>
             <tr>
                 <th width=100>Subject</th>
@@ -71,11 +75,18 @@ if(isset($_POST['btnCompute']))
         <center>
             <a href="GradeInputTable.php">Back</a>
         </center>
-<?>
+<?php
     }
     else
     {
         echo "<center><h2>Enter numeric values only...</h2></center>";
+        echo "<br><center><a href='GradeInputTable.php'>Back</a></center>";
     }
+}
+else
+{
+    // Redirect or show a message if someone tries to access this page directly
+    echo "<center><h2>Access Denied. Please submit the form first.</h2></center>";
+    echo "<br><center><a href='GradeInputTable.php'>Back to Form</a></center>";
 }
 ?>
